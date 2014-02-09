@@ -1,0 +1,6 @@
+-needle length control protein [Salmonella enterica subsp. enterica serovar Typhimurium str. LT2]
+-surface presentation of antigens protein SpaS [Salmonella enterica subsp. enterica serovar Typhimurium str. LT2]
+-surface presentation of antigens [Salmonella enterica subsp. enterica serovar Typhimurium]
+-surface presentation of antigens protein SpaO [Salmonella enterica subsp. enterica serovar Typhimurium str. LT2]
+
+-all the searches basically turn up things to do with the surface of salmonella enterica.
