@@ -103,7 +103,6 @@ def find_all_ORFs_oneframe(dna):
         dna: a DNA sequence
         returns: a list of non-nested ORFs
     """
-<<<<<<< HEAD
     i = 0
     ORF_list = []
     while i in range(0,len(dna)-1,3): #ignore the last codon: even if it is a start codon nothing comes after it!
@@ -116,17 +115,9 @@ def find_all_ORFs_oneframe(dna):
         i+=3
     return ORF_list
 
-        
-=======
-     
-    # YOUR IMPLEMENTATION HERE        
-     
 def find_all_ORFs_oneframe_unit_tests():
     """ Unit tests for the find_all_ORFs_oneframe function """
 
-    # YOUR IMPLEMENTATION HERE
-
->>>>>>> upstream/master
 def find_all_ORFs(dna):
     """ Finds all non-nested open reading frames in the given DNA sequence in all 3
         possible frames and returns them as a list.  By non-nested we mean that if an
