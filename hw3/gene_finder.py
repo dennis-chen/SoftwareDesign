@@ -228,9 +228,9 @@ def gene_finder(dna, threshold):
         all_AAs.append(coding_strand_to_AA(i))
     return all_AAs
    
-from load import load_seq
-dna = load_seq("./data/X73525.fa")
+#from load import load_seq
+#dna = load_seq("./data/X73525.fa")
 #longest_strand = longest_ORF_noncoding(dna,1500)
 #print longest_strand #longest strand found is 660 characters long!
-res = gene_finder(dna,800)
-print res
+#res = gene_finder(dna,800)
+#print res
