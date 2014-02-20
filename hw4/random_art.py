@@ -25,9 +25,9 @@ def build_random_function_with_specified_depth(depth):
             return [function,['x'],['y']]
         else:
             return[function,[choice(['x','y'])]]
-    if function == 'prod' or function == 'x' or function == 'y':        
+    if function == 'prod' or function == 'x' or function == 'y':  #if function requires two inputs      
         return [function,build_random_function_with_specified_depth(depth-1),build_random_function_with_specified_depth(depth-1)]
-    else:
+    else: #else if function requires one input
         return [function,build_random_function_with_specified_depth(depth-1)]
 
 def evaluate_random_function(f, x, y):
@@ -63,6 +63,10 @@ def remap_interval(val, input_interval_start, input_interval_end, output_interva
     return new_val
 
 def gen_random_image():
+    """Generates a randomized image, with RGB values described by randomly generated functions. The function loops through 
+    an array of pixel values and sets their values by evaluating the randomly generated functions with the pixel coordinates
+    as inputs.
+    """"
     im = Image.new("RGB",(350,350))
     pixels = im.load()
     rand_func_R = build_random_function(20,30)
