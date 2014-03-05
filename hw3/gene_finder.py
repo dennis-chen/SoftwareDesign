@@ -26,9 +26,9 @@ def coding_strand_to_AA(dna):
                  the input DNA fragment
     """
     aa_string = ''
-    for i in range(0,len(dna),3):
+    for i in range(0,len(dna),3):	#Fantastic! Way to use the iterator argument of range.
         for j in range(0,len(codons)):
-            if dna[i:i+3] in codons[j]:
+            if dna[i:i+3] in codons[j]:	#And great use of in, substringing, and += as well
                 aa_string += aa[j]
     return aa_string
 
@@ -52,10 +52,12 @@ def get_reverse_complement(dna):
         dna: a DNA sequence represented as a string
         returns: the reverse complementary DNA sequence represented as a string
     """
-    baseDict = {'A':'T','T':'A','C':'G','G':'C'} 
+    baseDict = {'A':'T','T':'A','C':'G','G':'C'} 	#Fancy. I hadn't seen this before in this assignment
+    												# but its an elegant solution
     reverse_complement = ''
     for i in range(len(dna)):
-        reverse_complement = baseDict[dna[i]] + reverse_complement
+        reverse_complement = baseDict[dna[i]] + reverse_complement # Might be more compact to just reverse this at
+        															# the end, but of course this is fine too
     return reverse_complement
     
 def get_reverse_complement_unit_tests():
@@ -73,15 +75,27 @@ def rest_of_ORF(dna):
         returns: the open reading frame represented as a string
     """
     i = 0
-    stopCodonNotFound = True
+    stopCodonNotFound = True	
     stopIndex = len(dna)
-    while i in range(0,len(dna)-1,3) and stopCodonNotFound:
+    while i in range(0,len(dna)-1,3) and stopCodonNotFound: # The len-1 here is pretty suspect because if I have
+    														# a string of length 100, it'll be indexed from 0-99
+    														# and range is exclusive on the second argument so that
+    														# range(0,100) will index from 0-99 already. So by subtracting
+    														# 1, you're likely to get an off-by-one bug. I'm not certain,
+    														# but I believe this code, and the similar statement in 
+    														# find_all_ORFs_oneframe are generating the bug that gets
+    														# thrown all the way in find_all_ORFs.
         codon = dna[i:i+3]
         if codon == 'TAG' or codon == 'TAA' or codon == 'TGA':
-            stopCodonNotFound = False
+        								#One alternative here aould be to use a syntax like
+        								#"if codon in ['TAG', 'TAA', 'TGA']:". It can be
+        								# more succinct in a long list of comaprisions
+
+            stopCodonNotFound = False 	#Good use of a boolean, but you could also just
+            							# return here.
             stopIndex = i
         i+=3
-    return dna[:stopIndex]
+    return dna[:stopIndex]	#Good use of empty arguments in substrings
     
     
 def rest_of_ORF_unit_tests():
@@ -106,6 +120,8 @@ def find_all_ORFs_oneframe(dna):
     i = 0
     ORF_list = []
     while i in range(0,len(dna)-1,3): #ignore the last codon: even if it is a start codon nothing comes after it!
+    									#Not certain that I buy this logic: if the last codon is a start codon,
+    									#you should be returning that codon.
         codon = dna[i:i+3]
         if codon == 'ATG':
             rest = rest_of_ORF(dna[i+3:])
@@ -127,6 +143,11 @@ def find_all_ORFs(dna):
         dna: a DNA sequence
         returns: a list of non-nested ORFs
     """
+	
+    #This function is bugged! My unit test is returning the following:
+	#input: ATGCATGAATGTAG, expected output: ['ATGCATGAATGTAG', 'ATGAATGTAG', 'ATG'] , actual output: ['ATGCATGAATGTAG', 'ATGAATGTAG']
+	#input: ATGTGCATGAGATAGGATGGGATGCTTG, expected output: ['ATGTGCATGAGA', 'ATGCTTG', 'ATGGGATGCTTG'], actual output: ['ATGTGCATGAGA', 'ATGCTTG', 'ATGGGATGCTTG']
+
     if len(dna)<3:
         return None
     dna_shift_1 = dna[1:]
@@ -176,6 +197,8 @@ def longest_ORF(dna):
             max_strand_length = len(all_strands[i])
             max_strand = all_strands[i]
     return max_strand
+    		#It makes sense here to make use of the max() method. Keep this in mind for future
+    		# issues like this.
     
 def longest_ORF_unit_tests():
     print "input: ATGAAATAGTACTATT, complement: "+get_reverse_complement('ATGAAATAGTACTATT')+' expected output: [ATGATAA], actual output: '+str(longest_ORF('ATGAAATAGTACTATT'))
@@ -194,7 +217,8 @@ def longest_ORF_noncoding(dna, num_trials):
         dna: a DNA sequence
         num_trials: the number of random shuffles
         returns: the maximum length longest ORF """
-    from random import shuffle
+    from random import shuffle 	# Typically, you want your imports at the top of your
+    							# code unless there is a good reason for them not to be there
     orf_max_length = 0
     for i in range(num_trials):
         print i
